@@ -1,0 +1,81 @@
+- hosts: all
+  remote_user: adminuser
+  become: true
+
+  tasks:
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+    # Install Deadsnakes repo for Python
+    - name: Python dependency- Add Deadsnakes Nightly APT repository
+      apt_repository:
+        repo: ppa:deadsnakes/nightly
+      when: ansible_distribution_release in ["focal", "bionic", "xenial"]
+
+    - name: Python dependency- Install latest deadsnakes python
+      apt:
+        name: ['python3.9-dev', 'python3.9-venv', 'python3.10-dev', 'python3.10-venv']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution_release in ["focal", "bionic", "xenial"]
+
+    # Install other dependencies
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+
+    # Install Docker
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Install docker-ce, docker-cli, containerd.io, docker-compose-plugin 
+      apt:
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+
+        state: latest
+        update_cache: true
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: Ensure group "docker" exists
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Adding "adminuser" to docker group
+      user:
+        name: adminuser
+        groups: docker
+        append: yes
+
+    - name: check docker is active
+      service:
+        name: docker
+        state: started
+        enabled: yes
