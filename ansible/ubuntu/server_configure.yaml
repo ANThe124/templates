@@ -1,0 +1,38 @@
+- hosts: all
+  remote_user: ${REMOTE_USERNAME}
+  become: true
+
+  tasks:
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+    # Install Deadsnakes repo for Python
+    - name: Python dependency- Add Deadsnakes Nightly APT repository
+      apt_repository:
+        repo: ppa:deadsnakes/nightly
+      when: ansible_distribution_release in ["focal", "bionic", "xenial"]
+
+    - name: Python dependency- Install latest deadsnakes python
+      apt:
+        name: ['python3.9-dev', 'python3.9-venv', 'python3.10-dev', 'python3.10-venv']
+        state: latest
+        update_cache: yes
+      when: ansible_distribution_release in ["focal", "bionic", "xenial"]
+
+    # Install other dependencies
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
