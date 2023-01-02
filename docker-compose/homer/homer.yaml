@@ -1,0 +1,16 @@
+---
+version: "3.3"
+services:
+  homer:
+    image: b4bz/homer
+    container_name: homer
+    restart: always
+    volumes:
+      - /var/docker/homer/data:/www/assets
+    ports:
+      - 8082:8080
+      
+    environment:
+      - INIT_ASSETS=1 # default
+    user: $UID:$GID # default
+    
