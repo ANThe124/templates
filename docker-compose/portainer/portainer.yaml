@@ -1,0 +1,16 @@
+---
+version: '3.3'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/docker/portainer:/data
+    ports:
+      - 8082:8080
+      - 9443:9443
