@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  remote_user: adminuser
+  remote_user: admin_username
   become: true
 
   tasks:
