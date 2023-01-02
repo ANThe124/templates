@@ -1,5 +1,5 @@
 - hosts: all
-  remote_user: ${REMOTE_USERNAME}
+  remote_user: admin_username
   become: true
 
   tasks:
