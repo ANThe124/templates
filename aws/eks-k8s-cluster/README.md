@@ -1,6 +1,8 @@
-# EKS Kubernetes Cluster with Terraform
+# Create an EKS Kubernetes Cluster with Terraform
 
-**Note:** Visit the [official HashiCorp documentation](https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks) for latest updates.
+<img src="assets/images/eks-cluster-banner.png">
+
+**Note:** Visit the [official HashiCorp documentation](https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks) for latest syntax updates.
 
 ## 1. Requirements
 
