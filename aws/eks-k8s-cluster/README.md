@@ -4,7 +4,9 @@
 
 **Note:** Visit the [official HashiCorp documentation](https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks) for latest syntax updates.
 
-## 1. Requirements
+<br>
+
+# Requirements:
 
 * Terraform v1.3+ installed locally
 * An AWS account
@@ -12,8 +14,23 @@
 * [AWS IAM Authenticator](https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/) v1.24.0 or newer
 
+# Setup:
+[1. Prepare Configuration](#1.-Prepare-Configuration)
 
-## 2. Prepare Configuration
+[2. Initialize Configuration](#2-initialize-configuration)
+
+[3. Provision the EKS Cluster](#3-provision-the-eks-cluster)
+
+[4. Configure kubectl](#4-configure-kubectl)
+
+[5. Connect to the Cluster](#5-connect-to-the-cluster)
+
+[6. Destroy All Resources](#6-destroy-all-resources)
+
+---
+
+
+## 1. Prepare Configuration
 
 * Open "variables.tf" and add the `default` credentials and `region` of your AWS IAM user:
 
@@ -37,7 +54,7 @@
     }
     ```
 
-## 3. Initialize Configuration
+## 2. Initialize Configuration
 
 * Run `terraform init` to initialize the configuration. Then run `terraform plan` to see what resources terraform will provision.
 
@@ -49,7 +66,7 @@
     terraform plan
     ```
 
-## 4. Provision the EKS Cluster
+## 3. Provision the EKS Cluster
 
 * Run `terraform apply` to create the cluster and all the supporting resources. Confirm the operation with a `yes` when prompted:
 
@@ -57,7 +74,7 @@
     terraform apply
     ```
 
-## 5. Configure kubectl
+## 4. Configure kubectl
 
 * After provisioning the cluster, we need to make it accessible with `kubectl`.
 * You need the `region` and `cluster_name` outputs from `outputs.tf` to configure `kubectl`. 
@@ -71,7 +88,7 @@
 * That's it! Your local `~/.kube/config` file is now updated with the access credentials to your new cluster.
 
 
-## 6. Connect to the Cluster
+## 5. Connect to the Cluster
 
 * You can now use `kubectl` to access your new cluster:
 
@@ -83,7 +100,7 @@
     kubectl get nodes
     ```
 
-## 7. Destroy All Resources
+## 6. Destroy All Resources
 
 **Warning:** [AWS EKS clusters cost $0.10 per hour](https://aws.amazon.com/eks/pricing/) so remember to delete your infrastructure after use.
 
